@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.acastillo.dev.backEndTest.dto.OperationDetailDto;
+import com.acastillo.dev.backEndTest.exceptions.OperationException;
 import com.acastillo.dev.backEndTest.services.ICalculatorService;
 
 import io.corp.calculator.TracerImpl;
@@ -23,7 +24,12 @@ public class CalculatorServiceImpl implements ICalculatorService{
 		result.setOperator1(operator1);
 		result.setOperator2(operator2);
 		result.setOperation("Subtraction");
-		result.setResult(operator1.subtract(operator2));
+		try {
+			result.setResult(operator1.subtract(operator2));
+		} catch (OperationException e) {
+			throw new OperationException("Error in Subtraction: (" + operator1 + " - " + operator2 + ")");
+		}
+		
 		tracer.trace("Finish Calculator Service Operation(Subtraction): (" + operator1 + " - " + operator2 + ")");
 		return result;
 	}
@@ -35,7 +41,11 @@ public class CalculatorServiceImpl implements ICalculatorService{
 		result.setOperator1(operator1);
 		result.setOperator2(operator2);
 		result.setOperation("Sum");
-		result.setResult(operator1.add(operator2));
+		try {
+			result.setResult(operator1.add(operator2));
+		} catch (OperationException e) {
+			throw new OperationException("Error in Sum: (" + operator1 + " + " + operator2 + ")");
+		}
 		tracer.trace("Finish Calculator Service Operation(Sum): (" + operator1 + " + " + operator2 + ")");
 		return result;
 	}
