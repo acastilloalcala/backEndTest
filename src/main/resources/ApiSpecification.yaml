@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: Calculator API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  '/calculator/sum':
+    parameters:
+      - schema:
+          type: number
+        name: operator1
+        in: query
+        required: true
+      - schema:
+          type: number
+        name: operator2
+        in: query
+        required: true
+    get:
+      operationId: sum
+      summary: Sum of two numbers
+      description: Returns the the sum of two numbers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationDetail'
+  '/calculator/subtraction':
+    parameters:
+      - schema:
+          type: number
+        name: operator1
+        in: query
+        required: true
+      - schema:
+          type: number
+        name: operator2
+        in: query
+        required: true
+    get:
+      operationId: subtract
+      summary: Subtraction of two numbers
+      description: Returns the the subtraction of two numbers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationDetail' 
+components:
+  schemas:
+    OperationDetail:
+      description: 'Operation detail'
+      type: object
+      properties:
+        operator1:
+          type: number
+          minLength: 1
+        operator2:
+          type: number
+          minLength: 1
+        operation:
+          type: string
+        result:
+          type: number
